@@ -363,3 +363,6 @@ FodyWeavers.xsd
 
 # Local publish script
 publish-local.ps1
+
+# Debug properties
+Properties/launchSettings.json
