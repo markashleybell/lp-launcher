@@ -10,7 +10,7 @@ namespace lp_launcher
     public static class Program
     {
         private const string _installPathV5 = @"C:\Program Files (x86)\LINQPad5\LINQPad.exe";
-        private const string _installPathV6 = @"C:\Program Files\LINQPad6\LINQPad6.exe";
+        private const string _installPathV7 = @"C:\Program Files\LINQPad7\LINQPad7.exe";
 
         private static int Main(string[] args)
         {
@@ -34,7 +34,7 @@ namespace lp_launcher
                 var type = singleLineHeaderMatch.Groups["type"].Value;
 
                 executablePath = type.Equals("FSharpProgram")
-                    ? _installPathV6
+                    ? _installPathV7
                     : _installPathV5;
             }
             else
@@ -53,7 +53,7 @@ namespace lp_launcher
                 var header = XDocument.Parse(headerLines.ToString()).Root;
 
                 executablePath = header.Element("RuntimeVersion") is object
-                    ? _installPathV6
+                    ? _installPathV7
                     : _installPathV5;
             }
 
