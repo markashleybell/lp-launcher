@@ -10,7 +10,7 @@ namespace lp_launcher
     public static class Program
     {
         private const string _installPathV5 = @"C:\Program Files (x86)\LINQPad5\LINQPad.exe";
-        private const string _installPathV7 = @"C:\Program Files\LINQPad7\LINQPad7.exe";
+        private const string _installPathV8 = @"C:\Program Files\LINQPad8\LINQPad8.exe";
 
         private static int Main(string[] args)
         {
@@ -29,18 +29,18 @@ namespace lp_launcher
             if (singleLineHeaderMatch.Success)
             {
                 // There is no RuntimeVersion element in the header,
-                // but we still want to launch V6 if this is an F# query
+                // but we still want to launch V8 if this is an F# query
 
                 var type = singleLineHeaderMatch.Groups["type"].Value;
 
                 executablePath = type.Equals("FSharpProgram")
-                    ? _installPathV7
+                    ? _installPathV8
                     : _installPathV5;
             }
             else
             {
                 // This is a block header, so keep reading lines until we find
-                // the end, then launch V6 if this query uses a newer runtime
+                // the end, then launch V8 if this query uses a newer runtime
 
                 headerLines.Append(line);
 
@@ -53,7 +53,7 @@ namespace lp_launcher
                 var header = XDocument.Parse(headerLines.ToString()).Root;
 
                 executablePath = header.Element("RuntimeVersion") is object
-                    ? _installPathV7
+                    ? _installPathV8
                     : _installPathV5;
             }
 
