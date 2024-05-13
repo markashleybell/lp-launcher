@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace lp_launcher
 {
-    public static class Program
+    public static partial class Program
     {
         private const string _installPathV5 = @"C:\Program Files (x86)\LINQPad5\LINQPad.exe";
         private const string _installPathV8 = @"C:\Program Files\LINQPad8\LINQPad8.exe";
@@ -24,7 +24,7 @@ namespace lp_launcher
 
             var line = fs.ReadLine();
 
-            var singleLineHeaderMatch = Regex.Match(line, "<Query Kind=\"(?<type>.*?)\" ?/>", RegexOptions.IgnoreCase);
+            var singleLineHeaderMatch = SingleLineHeaderRegex().Match(line);
 
             if (singleLineHeaderMatch.Success)
             {
@@ -52,7 +52,7 @@ namespace lp_launcher
 
                 var header = XDocument.Parse(headerLines.ToString()).Root;
 
-                executablePath = header.Element("RuntimeVersion") is object
+                executablePath = header.Element("RuntimeVersion") is not null
                     ? _installPathV8
                     : _installPathV5;
             }
@@ -61,5 +61,8 @@ namespace lp_launcher
 
             return 0;
         }
+
+        [GeneratedRegex("<Query Kind=\"(?<type>.*?)\" ?/>", RegexOptions.IgnoreCase, "en-GB")]
+        private static partial Regex SingleLineHeaderRegex();
     }
 }
